@@ -1,8 +1,3 @@
-var a = 1;
-var i = 0;
-var n = 50;
-var s = "";
-var stop = false;
 var options = ["paint", "listen to music", "write", 
 "watch bojack episodes that won't make us sadddddd !!!", "twister", 'make "galletas" heheheh', 
 "eat paper", "wander aimlessly", "zoo !", "soulard farmers market", 
@@ -15,27 +10,26 @@ var options = ["paint", "listen to music", "write",
 "make some dope ass paper planes and try to throw them in the dumpster", 
 "hangout in the stairwell", "do it? uhhhh ~no~", "bucket lists", "fight", "dark knight"];
 
-document.getElementById("spinning-wheel").addEventListener("click", spin);
+document.getElementById("remove-option").addEventListener("submit", remove);
+document.getElementById("add-option").addEventListener("submit", add);
 
-function spin() {
-    document.getElementById("spinning-wheel").removeEventListener("click", spin);
-    a = (a+45)%360;
-    s = "rotate(" + a + "deg)";
-    document.getElementById("wheel").style.transform = s;
-    document.getElementById("spin-the-wheel").style.color = "rgb(25, 25, 25)";
-    i++;
-    if (i<n) {
-        setTimeout(spin, 80);
+function remove(event1) {
+    event1.preventDefault();
+    var badOption = document.querySelector('input[name = "option"]:checked').value;
+    document.getElementById(badOption).remove();
+    for (o in options) {
+        if (options[o]==badOption) {
+            options.splice(o,1);
+        }
     }
-    else {
-        document.getElementById("spinning-wheel").addEventListener("click", spin);
-        document.getElementById("spin-the-wheel").style.color = "rgb(214, 214, 214)";
-        i = 0;
-        choose();
-    }
+    console.log(options);
 }
 
-function choose() {
-    var o = Math.floor(Math.random()*options.length);
-    document.getElementById("choice").innerHTML = options[o];
+function add(event2) {
+    event2.preventDefault();
+    var newOption = document.querySelector('input[name = "add-option"]').value;
+    options[options.length] = newOption;
+    console.log(options);
+    // var button = document.createElement("input")
+    // document.getElementById("remove-option").appendChild(button);
 }
